@@ -75,3 +75,10 @@ BASE_URL: https://api.spotify.com/v1
   - GET /me : get user information
   - GET /me/top/tracks : get top tracks ( 5 with query params )
   - GET /me/top/artists : get top artists ( 5 with query params )
+
+Prisma:
+
+- Object Relational Mapper. Layer that sits betweeen TS and SQL DB.
+- schema.prisma - describe database (create models and define relationships)
+- prisma migrate - migrates changes to actual DB
+- prisma client - what you use in your code to reference database stuff
