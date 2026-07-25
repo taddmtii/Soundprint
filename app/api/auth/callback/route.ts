@@ -33,6 +33,7 @@ export async function GET(request: NextRequest) {
     }),
   });
 
+
   if (!response.ok) {
     return NextResponse.json({ error: 'Token exchange failed' }, { status: 500 });
   }
@@ -46,5 +47,18 @@ export async function GET(request: NextRequest) {
   //   scope: "..."
   // }
   const data = await response.json();
+
+  // Redirect user to Dashboard now that they are authetnicated and store token in cookie.
+
+  const res = NextResponse.redirect(new URL("/dashboard", request.url));
+  res.cookies.set('access_token', data.access_token, {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: data.expires_in,
+    path: '/',
+  });
+  res.cookies.delete('code_verifier');
+
+  return res;
 
 }
