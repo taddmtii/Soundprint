@@ -15,7 +15,8 @@ Tech Stack:
 - Recharts
 - Next.js
   - API Routes
-- Database (maybe): Postgres via Prisma.
+- Component library - Shadcn
+- Database: Postgres via Prisma, DEV - Docker container, PROD - Supabase
 
 Ideas:
 
@@ -59,15 +60,18 @@ route.ts: an API endpoint / Route Handler (No UI, Request/Response logic)
   - Use access token for API calls.
 - **Code Verifier**: Cryptographic random string.
 
-Stories:
+- Insights:
+  - Listening time for given time period
+  - Top 5 tracks of selected time period
+  - Top 5 artists of selcted time period
+  - Listening activity over time.
+  - Unique Artists
+  - Discovery Rate
+  - Top 5 Genres
 
-- Research component libraries
-  - Compare and constrast to see what would be best for data display
-  - Integrate into app
+BASE_URL: https://api.spotify.com/v1
+
 - Endpoints:
-  - Load user (/me) upon load first
-  - Top 5 songs of selected time period
-  - Minutes listened of selected time period
-  -
-- Establish layout of app.
-  - Figure out a rough wireframe.
+  - GET /me : get user information
+  - GET /me/top/tracks : get top tracks ( 5 with query params )
+  - GET /me/top/artists : get top artists ( 5 with query params )
