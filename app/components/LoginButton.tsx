@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from "@/components/ui/button";
+
 const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
 const REDIRECT_URI = "http://127.0.0.1:3000/api/auth/callback"
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
@@ -51,6 +53,10 @@ export default function LoginButton() {
     window.location.href = authUrl.toString();
   };
 
-  return <button onClick={handleLogin}>Login with Spotify</button>
+  return (
+    <Button onClick={handleLogin} variant={"outline"} className="cursor-pointer">
+      Login with Spotify
+    </Button>
+  )
 
 }
