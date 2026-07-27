@@ -7,26 +7,32 @@ const APP_ORIGIN = "http://127.0.0.1:3000";
 
 export async function GET(request: NextRequest) {
   // Look at the url parameters and get the code, as well as the codeVerifier from the cookies.
-  const code = request.nextUrl.searchParams.get('code')
-  const error = request.nextUrl.searchParams.get('error')
-  const codeVerifier = request.cookies.get('code_verifier')?.value;
+  const code = request.nextUrl.searchParams.get("code");
+  const error = request.nextUrl.searchParams.get("error");
+  const codeVerifier = request.cookies.get("code_verifier")?.value;
 
   if (error) {
-    return NextResponse.json({ error: "Unauthorized: User denied authorization."}, {status: 401})
+    return NextResponse.json(
+      { error: "Unauthorized: User denied authorization." },
+      { status: 401 },
+    );
   }
 
   // Error if we do not have either of these things.
   if (!code || !codeVerifier) {
-    return NextResponse.json({ error: "Missing either code or verifier"}, {status: 400})
+    return NextResponse.json(
+      { error: "Missing either code or verifier" },
+      { status: 400 },
+    );
   }
 
   const response = await fetch(TOKEN_ENDPOINT, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
-      grant_type: 'authorization_code',
+      grant_type: "authorization_code",
       code: code,
       redirect_uri: REDIRECT_URI,
       client_id: CLIENT_ID,
@@ -34,9 +40,11 @@ export async function GET(request: NextRequest) {
     }),
   });
 
-
   if (!response.ok) {
-    return NextResponse.json({ error: 'Token exchange failed' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Token exchange failed" },
+      { status: 500 },
+    );
   }
 
   // Data structure:
@@ -52,14 +60,13 @@ export async function GET(request: NextRequest) {
   // Redirect user to Dashboard now that they are authetnicated and store token in cookie.
 
   const res = NextResponse.redirect(new URL("/dashboard", APP_ORIGIN));
-  res.cookies.set('access_token', data.access_token, {
+  res.cookies.set("access_token", data.access_token, {
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: "lax",
     maxAge: data.expires_in,
-    path: '/',
+    path: "/",
   });
-  res.cookies.delete('code_verifier');
+  res.cookies.delete("code_verifier");
 
   return res;
-
 }
