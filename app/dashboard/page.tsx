@@ -5,20 +5,33 @@ import StatDisplayCard from "../components/StatDisplayCard";
 
 export default function Dashboard() {
 
-  const [data, setData] = useState(null);
+  const [topArtists, setTopArtists] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
   const [error, setError] = useState<Response>();
 
   useEffect(() => {
     const fetchData = async () => {
-        const response = await fetch('/api/spotify/top-artists', {
+        // Fetch Top 5 artists
+        const topArtistsResponse = await fetch('/api/spotify/top-artists', {
           method: 'GET'
         })
-        if (!response.ok) {
-          setError(response)
+        if (!topArtistsResponse.ok) {
+          setError(topArtistsResponse)
         }
-        const data = await response.json();
-        setData(data)
-        console.log(data)
+        const topArtistsData = await topArtistsResponse.json();
+        setTopArtists(topArtistsData)
+        console.log(topArtistsData)
+
+        // Fetch Top 5 tracks
+        const topTracksResponse = await fetch('/api/spotify/top-tracks', {
+          method: 'GET'
+        })
+        if (!topTracksResponse.ok) {
+          setError(topTracksResponse)
+        }
+        const topTracksData = await topTracksResponse.json();
+        setTopTracks(topTracksData)
+        console.log(topTracksData)
     }
     fetchData();
   }, [])
