@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import StatDisplayCard from "../components/StatDisplayCard";
+import TopFiveCard from "../components/TopFiveCard";
 
 export default function Dashboard() {
 
-  const [topArtists, setTopArtists] = useState(null);
-  const [topTracks, setTopTracks] = useState(null);
+  const [topArtists, setTopArtists] = useState<TopArtistsResponse | null>(null);
+  const [topTracks, setTopTracks] = useState<TopTracksResponse | null>(null);
   const [error, setError] = useState<Response>();
 
   useEffect(() => {
@@ -39,7 +40,8 @@ export default function Dashboard() {
   return (
     <>
       <div className="flex">
-        <StatDisplayCard title="Streams" content="34" footer="tracks played" iconPath="..." />
+        <TopFiveCard title="Top 5 Artists" content={topArtists} footer="" iconPath="" />
+        <TopFiveCard title="Top 5 Tracks" content={topTracks} footer="" iconPath="" />
       </div>
     </>
   )

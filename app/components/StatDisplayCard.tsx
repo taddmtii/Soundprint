@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-interface StatDisplayCard {
+interface StatDisplayCardProps {
   title: string,
   content: string,
   footer: string,
@@ -15,7 +15,7 @@ interface StatDisplayCard {
 
 export default function StatDisplayCard({
   title, content, footer, iconPath
-}: StatDisplayCard) {
+}: StatDisplayCardProps) {
   return (
     <Card className="w-100">
       <CardHeader className="text-muted-foreground">
