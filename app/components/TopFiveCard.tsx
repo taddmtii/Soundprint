@@ -9,7 +9,7 @@ interface TopFiveCardProps {
 
 export default function TopFiveCard({title, content, footer, iconPath}: TopFiveCardProps) {
     return (
-    <Card className="w-200 h-300">
+    <Card className="w-150 h-200">
       <CardHeader className="text-muted-foreground">
         <CardTitle>{title}</CardTitle>
       </CardHeader>

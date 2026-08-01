@@ -8,6 +8,7 @@ export async function GET() {
   if (!access_token) {
     return NextResponse.json({ error: "access_token could not be read." });
   }
+  // Short term only right now, change query param.
   const response = await fetch(
     "https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5",
     {
