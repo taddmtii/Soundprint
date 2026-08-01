@@ -3,13 +3,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 interface TopFiveCardProps {
   title: string,
   content: TopTracksResponse | TopArtistsResponse | null,
-  footer: string,
   iconPath: string
 }
 
-export default function TopFiveCard({title, content, footer, iconPath}: TopFiveCardProps) {
+export default function TopFiveCard({title, content, iconPath}: TopFiveCardProps) {
     return (
-    <Card className="w-150 h-200">
+    <Card>
       <CardHeader className="text-muted-foreground">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
@@ -18,9 +17,6 @@ export default function TopFiveCard({title, content, footer, iconPath}: TopFiveC
             <div key={index}>{item.name}</div>
         ))}
       </CardContent>
-      <CardFooter className="text-muted-foreground text-xs">
-        <p>{footer}</p>
-      </CardFooter>
     </Card>
     )
 }
