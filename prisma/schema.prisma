@@ -15,9 +15,9 @@ datasource db {
 
 model User {
   id String                 @id @default(uuid())
-  spotifyAccountId String   @unique
+  spotifyAccountId String   @unique 
   displayName String 
-  imageUrl String
+  imageUrl String 
   spotifyProfileUrl String
   spotifyUri String
   accessToken String
