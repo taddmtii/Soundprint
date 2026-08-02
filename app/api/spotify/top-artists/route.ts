@@ -9,7 +9,7 @@ export async function GET() {
     return NextResponse.json({ error: "access_token could not be read." });
   }
   const response = await fetch(
-    "https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5",
+    "https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=5",
     {
       method: "GET",
       headers: {

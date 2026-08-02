@@ -1,6 +1,7 @@
 'use client'
 
-import TopFiveCard from "../components/TopFiveCard";
+import TopArtistsCard from "../components/TopArtistsCard";
+import TopTracksCard from "../components/TopTracksCard";
 import { useFetchData } from "../hooks/useFetchData";
 
 export default function Dashboard() {
@@ -9,8 +10,8 @@ export default function Dashboard() {
     <>
       <span>Hello, {data.user?.display_name}! Welcome to Sountprint.</span>
       <div className="flex">
-        <TopFiveCard title="Top 5 Artists" content={data.topArtists} iconPath="" />
-        <TopFiveCard title="Top 5 Tracks" content={data.topTracks} iconPath="" />
+        <TopTracksCard title="Top 5 Tracks" content={data.topTracks?.items}/>
+        <TopArtistsCard title="Top 5 Artists" content={data.topArtists?.items}/>
       </div>
     </>
   )
