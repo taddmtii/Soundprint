@@ -102,29 +102,8 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (err) {
-    if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      if (err.code === "P2002") {
-        user = await db.user.update({
-          where: { spotifyAccountId: profile.id },
-          data: {
-            spotifyUserId: profile.id,
-            displayName: profile.display_name,
-            email: profile.email,
-            imageUrl: profile.images[0].url ?? null,
-            spotifyProfileUrl: profile.external_urls?.spotify ?? null,
-            spotifyUri: profile.uri,
-            scopes: data.scope,
-            accessToken: data.access_token,
-            refreshToken: data.refresh_token,
-            token_expires_at: expiresAt,
-          },
-        });
-      }
-      // Throw anything that is not explicitly handled
-      throw err;
-    } else {
-      return NextResponse.json({ error: "DB write failed." }, { status: 500 });
-    }
+    console.error("Upsert has failed for some reason:", err);
+    throw err;
   }
 
   // Redirect user to Dashboard now that they are authetnicated and store token in cookie.
