@@ -64,5 +64,3 @@ export function useFetchData() {
     error,
   };
 }
-
-function getMinutesPlayedForArtist(artist: string) {}
