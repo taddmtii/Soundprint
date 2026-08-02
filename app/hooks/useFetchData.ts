@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useFetchData() {
   const [topArtists, setTopArtists] = useState<TopArtistsResponse | null>(null);
@@ -9,8 +9,8 @@ export function useFetchData() {
   useEffect(() => {
     const fetchData = async () => {
       // Fetch Top 5 artists
-      const topArtistsResponse = await fetch("/api/spotify/top-artists", {
-        method: "GET",
+      const topArtistsResponse = await fetch('/api/spotify/top-artists', {
+        method: 'GET',
       });
       if (!topArtistsResponse.ok) {
         setError(topArtistsResponse);
@@ -20,8 +20,8 @@ export function useFetchData() {
       console.log(topArtistsData);
 
       // Fetch Top 5 tracks
-      const topTracksResponse = await fetch("/api/spotify/top-tracks", {
-        method: "GET",
+      const topTracksResponse = await fetch('/api/spotify/top-tracks', {
+        method: 'GET',
       });
       if (!topTracksResponse.ok) {
         setError(topTracksResponse);
@@ -30,8 +30,8 @@ export function useFetchData() {
       setTopTracks(topTracksData);
       console.log(topTracksData);
 
-      const spotifyUserResponse = await fetch("api/spotify/me", {
-        method: "GET",
+      const spotifyUserResponse = await fetch('api/spotify/me', {
+        method: 'GET',
       });
       if (!spotifyUserResponse.ok) {
         setError(spotifyUserResponse);

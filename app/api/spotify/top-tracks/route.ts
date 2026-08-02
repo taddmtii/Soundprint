@@ -1,18 +1,18 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   const cookieStore = await cookies();
-  const access_token = cookieStore.get("access_token")?.value;
+  const access_token = cookieStore.get('access_token')?.value;
 
   if (!access_token) {
-    return NextResponse.json({ error: "access_token could not be read." });
+    return NextResponse.json({ error: 'access_token could not be read.' });
   }
   // Short term only right now, change query param.
   const response = await fetch(
-    "https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5",
+    'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5',
     {
-      method: "GET",
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
