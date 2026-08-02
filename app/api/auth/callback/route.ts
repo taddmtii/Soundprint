@@ -1,3 +1,4 @@
+import { Prisma } from "@/app/generated/prisma/client";
 import { db } from "@/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -70,36 +71,61 @@ export async function GET(request: NextRequest) {
   // Create entry in users table if user does not already exist. If they do exist, update fields with new information.
   const expiresAt = new Date(Date.now() + data.expires_in * 1000);
 
-  // About to hit user upsert..
-  const user = await db.user.upsert({
-    where: { spotifyAccountId: profile.id },
-    update: {
-      spotifyUserId: profile.id,
-      displayName: profile.display_name,
-      email: profile.email,
-      imageUrl: profile.images[0].url ?? null,
-      spotifyProfileUrl: profile.external_urls?.spotify ?? null,
-      spotifyUri: profile.uri,
-      scopes: data.scope,
-      accessToken: data.access_token,
-      refreshToken: data.refresh_token,
-      token_expires_at: expiresAt,
-    },
-    create: {
-      spotifyAccountId: profile.account_id,
-      spotifyUserId: profile.id,
-      displayName: profile.display_name,
-      email: profile.email,
-      imageUrl: profile.images[0].url ?? null,
-      spotifyProfileUrl: profile.external_urls?.spotify ?? null,
-      spotifyUri: profile.uri,
-      scopes: data.scope,
-      accessToken: data.access_token,
-      refreshToken: data.refresh_token,
-      token_expires_at: expiresAt,
-    },
-  });
-  // User upsert successful.
+  let user;
+  try {
+    user = await db.user.upsert({
+      where: { spotifyAccountId: profile.account_id },
+      update: {
+        spotifyUserId: profile.id,
+        displayName: profile.display_name,
+        email: profile.email,
+        imageUrl: profile.images[0].url ?? null,
+        spotifyProfileUrl: profile.external_urls?.spotify ?? null,
+        spotifyUri: profile.uri,
+        scopes: data.scope,
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
+        token_expires_at: expiresAt,
+      },
+      create: {
+        spotifyAccountId: profile.account_id,
+        spotifyUserId: profile.id,
+        displayName: profile.display_name,
+        email: profile.email,
+        imageUrl: profile.images[0].url ?? null,
+        spotifyProfileUrl: profile.external_urls?.spotify ?? null,
+        spotifyUri: profile.uri,
+        scopes: data.scope,
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
+        token_expires_at: expiresAt,
+      },
+    });
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      if (err.code === "P2002") {
+        user = await db.user.update({
+          where: { spotifyAccountId: profile.id },
+          data: {
+            spotifyUserId: profile.id,
+            displayName: profile.display_name,
+            email: profile.email,
+            imageUrl: profile.images[0].url ?? null,
+            spotifyProfileUrl: profile.external_urls?.spotify ?? null,
+            spotifyUri: profile.uri,
+            scopes: data.scope,
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+            token_expires_at: expiresAt,
+          },
+        });
+      }
+      // Throw anything that is not explicitly handled
+      throw err;
+    } else {
+      return NextResponse.json({ error: "DB write failed." }, { status: 500 });
+    }
+  }
 
   // Redirect user to Dashboard now that they are authetnicated and store token in cookie.
   // If user is null for any reason, redirect to home page for now.
