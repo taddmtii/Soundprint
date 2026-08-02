@@ -1,12 +1,23 @@
 interface SpotifyUser {
   account_id: string;
+  country?: string;
   display_name: string | null;
-  external_urls?: {
+  email?: string;
+  explicit_content?: {
+    filter_enabled: boolean;
+    filter_locked: boolean;
+  };
+  external_urls: {
     spotify: string;
   };
-  href?: string;
-  id?: string;
-  images?: { url: string; height: number | null; width: number | null }[];
-  type?: string;
-  uri?: string;
+  followers: {
+    href: string | null;
+    total: number;
+  };
+  href: string;
+  id: string;
+  images: { url: string; height: number | null; width: number | null }[];
+  product?: string;
+  type: string;
+  uri: string;
 }
