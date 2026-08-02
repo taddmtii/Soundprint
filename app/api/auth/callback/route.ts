@@ -74,6 +74,7 @@ export async function GET(request: NextRequest) {
   const user = await db.user.upsert({
     where: { spotifyAccountId: profile.id },
     update: {
+      spotifyUserId: profile.id,
       displayName: profile.display_name,
       email: profile.email,
       imageUrl: profile.images[0].url ?? null,
@@ -85,7 +86,8 @@ export async function GET(request: NextRequest) {
       token_expires_at: expiresAt,
     },
     create: {
-      spotifyAccountId: profile.id,
+      spotifyAccountId: profile.account_id,
+      spotifyUserId: profile.id,
       displayName: profile.display_name,
       email: profile.email,
       imageUrl: profile.images[0].url ?? null,

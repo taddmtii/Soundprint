@@ -17,6 +17,7 @@ model User {
   refreshToken      String
   scopes            String
   spotifyAccountId  String   @unique
+  spotifyUserId     String
   spotifyProfileUrl String
   spotifyUri        String
   token_expires_at  DateTime
