@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../app/generated/prisma"
@@ -10,20 +5,20 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url = env("DATABASE_URL")
 }
 
 model User {
-  id String                 @id @default(uuid())
-  spotifyAccountId String   @unique 
-  displayName String 
-  imageUrl String 
+  id                String   @id @default(uuid())
+  displayName       String
+  email             String
+  imageUrl          String
+  accessToken       String
+  created_at        DateTime @default(now())
+  refreshToken      String
+  scopes            String
+  spotifyAccountId  String   @unique
   spotifyProfileUrl String
-  spotifyUri String
-  accessToken String
-  refreshToken String
-  token_expires_at DateTime
-  scopes String
-  created_at DateTime       @default(now())
-  updated_at DateTime       @updatedAt
+  spotifyUri        String
+  token_expires_at  DateTime
+  updated_at        DateTime @updatedAt
 }

@@ -1,3 +1,4 @@
+import { db } from "@/db";
 import { NextRequest, NextResponse } from "next/server";
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID!;
@@ -57,7 +58,53 @@ export async function GET(request: NextRequest) {
   // }
   const data = await response.json();
 
+  // Look up user profile with access token.
+  const profileResponse = await fetch("https://api.spotify.com/v1/me", {
+    headers: {
+      Authorization: `Bearer ${data.access_token}`,
+    },
+  });
+
+  const profile = await profileResponse.json();
+
+  // Create entry in users table if user does not already exist. If they do exist, update fields with new information.
+  const expiresAt = new Date(Date.now() + data.expires_in * 1000);
+
+  // About to hit user upsert..
+  const user = await db.user.upsert({
+    where: { spotifyAccountId: profile.id },
+    update: {
+      displayName: profile.display_name,
+      email: profile.email,
+      imageUrl: profile.images[0].url ?? null,
+      spotifyProfileUrl: profile.external_urls?.spotify ?? null,
+      spotifyUri: profile.uri,
+      scopes: data.scope,
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+      token_expires_at: expiresAt,
+    },
+    create: {
+      spotifyAccountId: profile.id,
+      displayName: profile.display_name,
+      email: profile.email,
+      imageUrl: profile.images[0].url ?? null,
+      spotifyProfileUrl: profile.external_urls?.spotify ?? null,
+      spotifyUri: profile.uri,
+      scopes: data.scope,
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+      token_expires_at: expiresAt,
+    },
+  });
+  // User upsert successful.
+
   // Redirect user to Dashboard now that they are authetnicated and store token in cookie.
+  // If user is null for any reason, redirect to home page for now.
+
+  // if (user == null) {
+  //   return NextResponse.redirect(new URL("/", APP_ORIGIN));
+  // }
 
   const res = NextResponse.redirect(new URL("/dashboard", APP_ORIGIN));
   res.cookies.set("access_token", data.access_token, {
