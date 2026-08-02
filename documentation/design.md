@@ -75,6 +75,9 @@ BASE_URL: https://api.spotify.com/v1
   - GET /me : get user information
   - GET /me/top/tracks : get top tracks ( 5 with query params )
   - GET /me/top/artists : get top artists ( 5 with query params )
+  - GET /top-genres : returns top genres for user
+  - GET /listening-time
+  - GET /total-streams
 
 Prisma:
 
@@ -82,3 +85,21 @@ Prisma:
 - schema.prisma - describe database (create models and define relationships)
 - prisma migrate - migrates changes to actual DB
 - prisma client - what you use in your code to reference database stuff
+
+Redis Cache:
+
+- https://redis.io/docs/latest/
+
+TODO:
+
+1. After hitting /token endpoint and getting access token/refresh token, create an entry in users table only if user does not already exist. If they do exist, update neccesary fields with new information.
+
+- NOTE: token_expires_at: current_time + expires_in (what we get when we get token).
+
+2. Issue our own JWT token for the user.
+3. Before hitting any spotify endpoint, check if token_expires_at has passed. If valid, use it. If expired, refresh first.
+
+- That request may look something like:
+- POST /token, grant_type=refresh_token
+
+4. After refresh of token, update users table with that new data.
