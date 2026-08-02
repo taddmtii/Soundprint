@@ -8,9 +8,9 @@ export async function GET() {
   if (!access_token) {
     return NextResponse.json({ error: 'access_token could not be read.' });
   }
-  // Short term only right now, change query param.
+  // TODO: Short term only right now, change query param so that we can conditionally put short term, medium term and long term. This is importnat for calculations like minuted played, but for simplicity sake right now this is fine.
   const response = await fetch(
-    'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5',
+    'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=50',
     {
       method: 'GET',
       headers: {

@@ -7,6 +7,7 @@ interface TopArtistsCardProps {
 }
 
 export default function TopArtistsCard({title, content}: TopArtistsCardProps) {
+  const top5 = content?.slice(0,5)
   return (
       <div className="w-125 h-100">
       <Card>
@@ -17,7 +18,7 @@ export default function TopArtistsCard({title, content}: TopArtistsCardProps) {
             </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
-          {content?.map((artist, index) => (
+          {top5?.map((artist, index) => (
             <div key={artist.id} className="flex items-center gap-3">
                <span>{index + 1}</span>
               {artist.images[0].url && (

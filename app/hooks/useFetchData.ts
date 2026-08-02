@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 export function useFetchData() {
   const [topArtists, setTopArtists] = useState<TopArtistsResponse | null>(null);
   const [topTracks, setTopTracks] = useState<TopTracksResponse | null>(null);
+  const [recentlyPlayed, setRecentlyPlayed] = useState<RecentlyPlayedResponse | null>(null);
   const [user, setUser] = useState<SpotifyUser | null>(null);
   const [error, setError] = useState<Response>();
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch Top 5 artists
+      // Fetch Top artists
       const topArtistsResponse = await fetch('/api/spotify/top-artists', {
         method: 'GET',
       });
@@ -19,7 +20,7 @@ export function useFetchData() {
       setTopArtists(topArtistsData);
       console.log(topArtistsData);
 
-      // Fetch Top 5 tracks
+      // Fetch Top tracks
       const topTracksResponse = await fetch('/api/spotify/top-tracks', {
         method: 'GET',
       });
@@ -30,6 +31,7 @@ export function useFetchData() {
       setTopTracks(topTracksData);
       console.log(topTracksData);
 
+      // Fetch the User
       const spotifyUserResponse = await fetch('api/spotify/me', {
         method: 'GET',
       });
@@ -39,6 +41,17 @@ export function useFetchData() {
       const spotifyUserData = await spotifyUserResponse.json();
       setUser(spotifyUserData);
       console.log(spotifyUserData);
+
+      // Fetch recently played tracks
+      const recentlyPlayedResponse = await fetch('api/spotify/me/recently-played', {
+        method: 'GET',
+      });
+      if (!recentlyPlayedResponse.ok) {
+        setError(recentlyPlayedResponse);
+      }
+      const recentlyPlayedData = await recentlyPlayedResponse.json();
+      setRecentlyPlayed(recentlyPlayedData);
+      console.log(recentlyPlayedData);
     };
     fetchData();
   }, []);
@@ -46,7 +59,10 @@ export function useFetchData() {
   return {
     topArtists,
     topTracks,
+    recentlyPlayed,
     user,
     error,
   };
 }
+
+function getMinutesPlayedForArtist(artist: string) {}

@@ -8,15 +8,12 @@ export async function GET() {
   if (!access_token) {
     return NextResponse.json({ error: 'access_token could not be read.' });
   }
-  const response = await fetch(
-    'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=50',
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
+  const response = await fetch('https://api.spotify.com/v1/me/player/recently-played?limit=50', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${access_token}`,
     },
-  );
+  });
   if (!response.ok) {
     const errorData = await response.json();
     return NextResponse.json(errorData, { status: response.status });

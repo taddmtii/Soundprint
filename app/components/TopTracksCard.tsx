@@ -7,6 +7,7 @@ interface TopTracksCardProps {
 }
 
 export default function TopTracksCard({title, content}: TopTracksCardProps) {
+    const top5 = content?.slice(0,5)
     return (
       <div className="w-125 h-100">
       <Card>
@@ -17,7 +18,7 @@ export default function TopTracksCard({title, content}: TopTracksCardProps) {
           </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
-          {content?.map((track, index) => (
+          {top5?.map((track, index) => (
             <div key={track.id} className="flex items-center gap-3">
               <span>{index + 1}</span>
               {track.album.images[0].url && (
