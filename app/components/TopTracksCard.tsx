@@ -2,11 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Music2 } from "lucide-react"
 
 interface TopTracksCardProps {
-  title: string,
   content: SpotifyTrack[] | undefined,
 }
 
-export default function TopTracksCard({title, content}: TopTracksCardProps) {
+export default function TopTracksCard({content}: TopTracksCardProps) {
     const top5 = content?.slice(0,5)
     return (
       <div className="w-125 h-100">
@@ -14,7 +13,7 @@ export default function TopTracksCard({title, content}: TopTracksCardProps) {
         <CardHeader className="text-muted-foreground">
           <div className="flex gap-2">
             <Music2 color="red" />
-            <CardTitle>{title}</CardTitle>
+            <CardTitle>Top Tracks</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-lg font-bold">

@@ -2,11 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UsersRound } from "lucide-react";
 
 interface TopArtistsCardProps {
-  title: string,
   content: SpotifyArtist[] | undefined
 }
 
-export default function TopArtistsCard({title, content}: TopArtistsCardProps) {
+export default function TopArtistsCard({content}: TopArtistsCardProps) {
   const topFiveArtists = content?.slice(0,5)
   return (
       <div className="w-125 h-100">
@@ -14,7 +13,7 @@ export default function TopArtistsCard({title, content}: TopArtistsCardProps) {
         <CardHeader className="text-muted-foreground">
             <div className="flex gap-2">
                 <UsersRound color="red" />
-                <CardTitle className="font-bold">{title}</CardTitle>
+                <CardTitle className="font-bold">Top Artists</CardTitle>
             </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
