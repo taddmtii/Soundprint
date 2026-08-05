@@ -19,7 +19,7 @@ export default function TopTracksCard({content, isLoading}: TopTracksCardProps) 
           </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
-{         isLoading ? (
+            {isLoading ? (
             Array.from({ length: 5 }).map((_, index) => (
               <div key={index} className="flex items-center gap-3">
                 <Skeleton className="h-4 w-4" />

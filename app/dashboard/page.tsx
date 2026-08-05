@@ -14,8 +14,8 @@ export default function Dashboard() {
       <span className="text-2xl font-bold">Hello, {data.user?.display_name}! Welcome to Soundprint.</span>
       <div className="flex">
         <TopTracksCard content={data.topTracks?.items} isLoading={data.isLoading}/>
-        <TopArtistsCard content={data.topArtists?.items} />
-        <RecentlyPlayedCard content={data.recentlyPlayed?.items} />
+        <TopArtistsCard content={data.topArtists?.items} isLoading={data.isLoading} />
+        <RecentlyPlayedCard content={data.recentlyPlayed?.items} isLoading={data.isLoading} />
       </div>
     </>
   )

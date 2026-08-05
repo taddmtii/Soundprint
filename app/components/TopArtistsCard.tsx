@@ -1,12 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { UsersRound } from "lucide-react";
 
 interface TopArtistsCardProps {
   content: SpotifyArtist[] | undefined
+  isLoading: boolean
 }
 
-export default function TopArtistsCard({content}: TopArtistsCardProps) {
-  const topFiveArtists = content?.slice(0,5)
+export default function TopArtistsCard({content, isLoading}: TopArtistsCardProps) {
+  const top5 = content?.slice(0,5)
   return (
       <div className="w-125 h-100">
       <Card>
@@ -17,7 +19,19 @@ export default function TopArtistsCard({content}: TopArtistsCardProps) {
             </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
-          {topFiveArtists?.map((artist, index) => (
+          {isLoading ? (
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <Skeleton className="h-4 w-4" />
+                <Skeleton className="h-12 w-12 rounded" />
+                <div className="flex flex-col gap-1">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-3 w-20" />
+                </div>
+              </div>
+            ))
+          ) : (
+          top5?.map((artist, index) => (
             <div key={artist.id} className="flex items-center gap-3">
                <span>{index + 1}</span>
               {artist.images[0].url && (
@@ -30,7 +44,8 @@ export default function TopArtistsCard({content}: TopArtistsCardProps) {
                 </div>
               </div>
             </div>
-          ))}
+              ))
+          )}
         </CardContent>
       </Card>
       </div>
