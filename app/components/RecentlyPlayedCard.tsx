@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { UsersRound } from "lucide-react";
+import { AudioLines, UsersRound } from "lucide-react";
 
 interface RecentlyPlayedCardProps {
   content: RecentlyPlayedItem[] | undefined
@@ -13,7 +13,7 @@ export default function RecentlyPlayedCard({content}: RecentlyPlayedCardProps) {
       <Card>
         <CardHeader className="text-muted-foreground">
             <div className="flex gap-2">
-                <UsersRound color="red" />
+                <AudioLines color="red" />
                 <CardTitle className="font-bold">Recently Played</CardTitle>
             </div>
         </CardHeader>
@@ -26,7 +26,7 @@ export default function RecentlyPlayedCard({content}: RecentlyPlayedCardProps) {
               )}
               <div className="flex flex-col gap-1">
                 <div>{item.track.name}</div>
-                <div>{getMinutesAgo(item.played_at)}m ago</div>
+                <div className="text-muted-foreground text-sm">{getMinutesAgo(item.played_at)}</div>
               </div>
             </div>
           ))}
@@ -37,9 +37,18 @@ export default function RecentlyPlayedCard({content}: RecentlyPlayedCardProps) {
 }
 
 // Represents how many minutes ago the track was last played for display.
-function getMinutesAgo(played_at: string) {
-    return Math.round((Date.now() - new Date(played_at).getTime()) / 60000);
-}
+function getMinutesAgo(played_at: string): string { 
+    let res;
+    const total_minutes = Math.round((Date.now() - new Date(played_at).getTime()) / 60000);
+    if (total_minutes >= 60) {
+      const hours = Math.floor(total_minutes / 60)
+      const minutes = total_minutes % 60
+      res = `${hours}h ${minutes}m ago`
+    } else {
+      res = `${total_minutes}m ago`
+    }
+    return res;
+  }
 
 // Go over each item and add the item only if we have not seen it yet. Avoids duplicate tracks in display.
 function dedupeByTrack(items: RecentlyPlayedItem[]) {
