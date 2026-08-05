@@ -35,6 +35,8 @@ export default function RecentlyPlayedCard({content, isLoading}: RecentlyPlayedC
           topRecentlyPlayedTracks?.map((item, index) => (
             <div key={`${item.track.id}-${item.played_at}`} className="flex items-center gap-3">
                <span>{index + 1}</span>
+               {/* If we are in the double digits on index, add some space to others to formatting is not misaligned */}
+               {(index + 1) < 10 ? <span>        </span> : ""}
               {item.track.album.images[0] && (
                 <img src={item.track.album.images[0].url} alt={item.track.name} className="h-12 w-12 rounded object-cover" />
               )}
