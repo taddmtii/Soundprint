@@ -25,6 +25,9 @@ export default function TopArtistsCard({content}: TopArtistsCardProps) {
               )}
               <div className="flex flex-col gap-1">
                 <div>{artist.name}</div>
+                <div className="text-muted-foreground text-sm cursor-pointer">
+                  <a href={artist.external_urls.spotify} target="_blank">Spotify Link</a>
+                </div>
               </div>
             </div>
           ))}
