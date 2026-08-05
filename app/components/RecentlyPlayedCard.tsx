@@ -1,13 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { AudioLines, UsersRound } from "lucide-react";
 
 interface RecentlyPlayedCardProps {
   content: RecentlyPlayedItem[] | undefined
+  isLoading: boolean
 }
 
 
-export default function RecentlyPlayedCard({content}: RecentlyPlayedCardProps) {
-  const topRecentlyPlayedTracks = content ? dedupeByTrack(content).slice(0,6) : undefined
+export default function RecentlyPlayedCard({content, isLoading}: RecentlyPlayedCardProps) {
+  const topRecentlyPlayedTracks = content ? dedupeByTrack(content).slice(0,10) : undefined
   return (
       <div className="w-125 h-100">
       <Card>
@@ -18,9 +20,23 @@ export default function RecentlyPlayedCard({content}: RecentlyPlayedCardProps) {
             </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
-          {topRecentlyPlayedTracks?.map((item, index) => (
+          {isLoading ? (
+            Array.from({ length: 10 }).map((_, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <Skeleton className="h-4 w-4" />
+                <Skeleton className="h-12 w-12 rounded" />
+                <div className="flex flex-col gap-1">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-3 w-20" />
+                </div>
+              </div>
+            ))
+          ) : (
+          topRecentlyPlayedTracks?.map((item, index) => (
             <div key={`${item.track.id}-${item.played_at}`} className="flex items-center gap-3">
                <span>{index + 1}</span>
+               {/* If we are in the double digits on index, add some space to others to formatting is not misaligned */}
+               {(index + 1) < 10 ? <span>        </span> : ""}
               {item.track.album.images[0] && (
                 <img src={item.track.album.images[0].url} alt={item.track.name} className="h-12 w-12 rounded object-cover" />
               )}
@@ -29,7 +45,8 @@ export default function RecentlyPlayedCard({content}: RecentlyPlayedCardProps) {
                 <div className="text-muted-foreground text-sm">{getMinutesAgo(item.played_at)}</div>
               </div>
             </div>
-          ))}
+            ))
+          )}
         </CardContent>
       </Card>
       </div>
