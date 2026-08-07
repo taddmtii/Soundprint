@@ -4,7 +4,7 @@ export function useFetchData() {
   const [topArtists, setTopArtists] = useState<TopArtistsResponse | null>(null);
   const [topTracks, setTopTracks] = useState<TopTracksResponse | null>(null);
   const [recentlyPlayed, setRecentlyPlayed] = useState<RecentlyPlayedResponse | null>(null);
-  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState<CurrentlyPlayingResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<SpotifyUser | null>(null);
   const [error, setError] = useState<Response>();
