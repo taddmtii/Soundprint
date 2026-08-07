@@ -4,6 +4,7 @@ export function useFetchData() {
   const [topArtists, setTopArtists] = useState<TopArtistsResponse | null>(null);
   const [topTracks, setTopTracks] = useState<TopTracksResponse | null>(null);
   const [recentlyPlayed, setRecentlyPlayed] = useState<RecentlyPlayedResponse | null>(null);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState<CurrentlyPlayingResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<SpotifyUser | null>(null);
   const [error, setError] = useState<Response>();
@@ -54,6 +55,18 @@ export function useFetchData() {
       setRecentlyPlayed(recentlyPlayedData);
       console.log(recentlyPlayedData);
 
+      // Fetch currently playing track
+      const currentlyPlayingResponse = await fetch('api/spotify/me/player/currently-playing', {
+        method: 'GET',
+      });
+      if (!currentlyPlayingResponse.ok) {
+        setError(currentlyPlayingResponse);
+      } else {
+        const currentlyPlayingData = await currentlyPlayingResponse.json();
+        setCurrentlyPlaying(currentlyPlayingData);
+        console.log(currentlyPlayingData);
+      }
+
       setIsLoading(false);
     };
     fetchData();
@@ -63,6 +76,7 @@ export function useFetchData() {
     topArtists,
     topTracks,
     recentlyPlayed,
+    currentlyPlaying,
     isLoading,
     user,
     error,
