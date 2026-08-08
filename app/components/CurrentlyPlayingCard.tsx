@@ -7,28 +7,27 @@ interface CurrentlyPlayingCardProps {
 }
 
 export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlayingCardProps) {
-    return (
+  return (
       <div className="w-[90vw] h-100">
-      <Card>
-        <CardHeader className="text-muted-foreground">
-            <div>
-                <CardTitle className="font-bold">Currently Played</CardTitle>
-            </div>
-        </CardHeader>
+      <Card className="rounded-2xl bg-primary">
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
-          {isLoading ? (
-            Array.from({ length: 10 }).map((_, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <Skeleton className="h-4 w-4" />
-                <Skeleton className="h-12 w-12 rounded" />
-                <div className="flex flex-col gap-1">
-                  <Skeleton className="h-4 w-32" />
-                  <Skeleton className="h-3 w-20" />
+          {isLoading || content == null ? (
+              <div className="flex items-center gap-10">
+                <Skeleton className="h-50 w-50 rounded" />
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="h-6 w-32" />
+                  <Skeleton className="h-10 w-100" />
+                  <Skeleton className="h-6 w-80" />
+                  <Skeleton className="h-4 w-[70vw]" />
                 </div>
               </div>
-            ))
           ) : (
-            <div>Done Loading</div>
+            <div className="flex flex-col gap-2">
+              <div>{content?.is_playing ? (<span>Playing</span>) : (<span>Not currently playing anything</span>)}</div>
+              <div className="font-bond text-2xl">{content?.item?.name}</div>
+              <div className="text-muted-foreground text-lg">{content?.item?.artists[0].name} · {content?.item?.album.name}</div>
+              <img src={content?.item?.album.images[0].url} />
+            </div>
           )}
         </CardContent>
       </Card>
