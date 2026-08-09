@@ -15,7 +15,7 @@ export default function CurrentlyPlayingCard({content, recentlyPlayed, isLoading
   const displayTrack = isActive ? content?.item : lastPlayedTrack;
 
   return (
-      <div className="w-[90vw] h-100">
+      <div>
       <Card className="rounded-2xl bg-primary">
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
           {isLoading || (content == null && recentlyPlayed == null) ? (
@@ -61,7 +61,7 @@ export default function CurrentlyPlayingCard({content, recentlyPlayed, isLoading
               <div className="flex flex-col gap-1 text-sm text-muted-foreground">
                 <span>Playing on</span>
                 <span className="font-medium">{content?.device.name ?? "Unknown device"}</span>
-              </div> 
+              </div>
             </div>
           </div>
           )}
