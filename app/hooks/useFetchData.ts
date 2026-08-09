@@ -8,9 +8,12 @@ export function useFetchData() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<SpotifyUser | null>(null);
   const [error, setError] = useState<Response>();
+  const POLLING_INTERVAL = 5000;
 
   useEffect(() => {
-    const fetchData = async () => {
+    // topArtists, topTracks, and User only should be fetched on mount.
+    // The goal here is to reduce server load, and poll for the other stuff.
+    const fetchStaticData = async () => {
       // Fetch Top artists
       const topArtistsResponse = await fetch('/api/spotify/top-artists', {
         method: 'GET',
@@ -44,6 +47,11 @@ export function useFetchData() {
       setUser(spotifyUserData);
       console.log(spotifyUserData);
 
+      setIsLoading(false);
+    };
+
+    // Fetch the other stuff that needs to be polled for.
+    const fetchLiveData = async () => {
       // Fetch recently played tracks
       const recentlyPlayedResponse = await fetch('api/spotify/me/recently-played', {
         method: 'GET',
@@ -66,10 +74,14 @@ export function useFetchData() {
         setCurrentlyPlaying(currentlyPlayingData);
         console.log(currentlyPlayingData);
       }
-
-      setIsLoading(false);
-    };
-    fetchData();
+    }
+    fetchStaticData();
+    fetchLiveData();
+    // Set up interval to run the callback (fetchLiveData). Returns ID that
+    // references the id.
+    const interval = setInterval(fetchLiveData, POLLING_INTERVAL);
+    // Clean up the interval.
+    return () => clearInterval(interval)
   }, []);
 
   return {
