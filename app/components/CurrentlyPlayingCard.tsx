@@ -4,15 +4,21 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 interface CurrentlyPlayingCardProps {
     content: CurrentlyPlayingResponse | null;
+    recentlyPlayed: RecentlyPlayedResponse | null;
     isLoading: boolean;
 }
 
-export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlayingCardProps) {
+export default function CurrentlyPlayingCard({content, recentlyPlayed, isLoading}: CurrentlyPlayingCardProps) {
+  // Check if track is currently active (or playing now). If it is not, get most recent track from recentlyPlayed response and use that as a fall back.
+  const isActive = content != null && content.is_playing;
+  const lastPlayedTrack = recentlyPlayed?.items[0].track ?? null;
+  const displayTrack = isActive ? content?.item : lastPlayedTrack;
+
   return (
       <div className="w-[90vw] h-100">
       <Card className="rounded-2xl bg-primary">
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
-          {isLoading || content == null ? (
+          {isLoading || (content == null && recentlyPlayed == null) ? (
               <div className="flex items-center gap-10">
                 <Skeleton className="h-50 w-50 rounded" />
                 <div className="flex flex-col gap-2">
@@ -25,13 +31,13 @@ export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlay
           ) : (
             <div className="flex items-center gap-10">
             <img
-              src={content?.item?.album.images[0]?.url}
+              src={displayTrack?.album.images[0]?.url}
               className="h-50 w-50 rounded object-cover shrink-0"
-              alt={content?.item?.album.name}
+              alt={displayTrack?.album.name}
             />
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <Badge className="bg-white text-black hover:bg-white w-fit rounded-3xl">
-                {content?.is_playing ? (
+                {isActive ? (
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 bg-green-500 rounded-full" />
                     <span>Playing</span>
@@ -45,11 +51,11 @@ export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlay
               </Badge>
 
               <div className="text-white font-bold text-2xl truncate w-100">
-                {content?.item?.name}
+                {displayTrack?.name}
               </div>
 
               <div className="text-muted-foreground text-lg truncate w-80">
-                {content?.item?.artists[0]?.name} · {content?.item?.album.name}
+                {displayTrack?.artists[0]?.name} · {displayTrack?.album.name}
               </div>
 
               <div className="flex flex-col gap-1 text-sm text-muted-foreground">
