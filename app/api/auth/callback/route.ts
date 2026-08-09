@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
   //   return NextResponse.redirect(new URL("/", APP_ORIGIN));
   // }
 
-  const res = NextResponse.redirect(new URL('/dashboard', APP_ORIGIN));
+  const res = NextResponse.redirect(new URL('/now-playing', APP_ORIGIN));
   res.cookies.set('access_token', data.access_token, {
     httpOnly: true,
     sameSite: 'lax',
