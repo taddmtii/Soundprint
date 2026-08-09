@@ -8,12 +8,18 @@ export async function GET() {
   if (!access_token) {
     return NextResponse.json({ error: 'access_token could not be read.' });
   }
-  const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+  const response = await fetch('https://api.spotify.com/v1/me/player/', {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
   });
+
+  // Nothing currently playing, spotify returns a 204, whcih is still deemed "ok" since its in the 200 family.
+  if (response.status === 204) {
+    return NextResponse.json(null, { status: 200 });
+  }
+
   if (!response.ok) {
     const errorData = await response.json();
     return NextResponse.json(errorData, { status: response.status });

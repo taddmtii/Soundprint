@@ -56,7 +56,7 @@ export function useFetchData() {
       console.log(recentlyPlayedData);
 
       // Fetch currently playing track
-      const currentlyPlayingResponse = await fetch('api/spotify/me/player/currently-playing', {
+      const currentlyPlayingResponse = await fetch('api/spotify/me/player', {
         method: 'GET',
       });
       if (!currentlyPlayingResponse.ok) {
