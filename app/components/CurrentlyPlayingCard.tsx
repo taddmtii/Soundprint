@@ -10,11 +10,14 @@ interface CurrentlyPlayingCardProps {
 }
 export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlayingCardProps) {
   // State to store last content.
-  const [lastContent, setLastContent] = useState<CurrentlyPlayingResponse | null>(() => {
-    if (typeof window === "undefined") return null;
+  const [lastContent, setLastContent] = useState<CurrentlyPlayingResponse | null>(null)
+  useEffect(() => {
     const cached = sessionStorage.getItem("lastContent");
-    return cached ? JSON.parse(cached) : null;
-  })
+    if (cached) {
+      setLastContent(JSON.parse(cached));
+    }
+  }, []);
+
   useEffect(() => {
     if (content != null && content.item != null) {
       setLastContent(content);
