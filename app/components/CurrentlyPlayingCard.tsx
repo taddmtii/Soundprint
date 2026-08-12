@@ -6,10 +6,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
 interface CurrentlyPlayingCardProps {
     content: CurrentlyPlayingResponse | null;
-    recentlyPlayed: RecentlyPlayedResponse | null;
     isLoading: boolean;
 }
-export default function CurrentlyPlayingCard({content, recentlyPlayed, isLoading}: CurrentlyPlayingCardProps) {
+export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlayingCardProps) {
   // State to store last content.
   const [lastContent, setLastContent] = useState<CurrentlyPlayingResponse | null>(() => {
     if (typeof window === "undefined") return null;

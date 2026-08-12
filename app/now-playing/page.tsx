@@ -15,7 +15,7 @@ export default function NowPlaying() {
       </div>
       <Separator />
       <div className="flex flex-col gap-2 items-center">
-        <CurrentlyPlayingCard content={data.currentlyPlaying} recentlyPlayed={data.recentlyPlayed} isLoading={data.isLoading} />
+        <CurrentlyPlayingCard content={data.currentlyPlaying} isLoading={data.isLoading} />
         <Separator />
         <RecentlyPlayedCard content={data.recentlyPlayed?.items} isLoading={data.isLoading} />
       </div>
