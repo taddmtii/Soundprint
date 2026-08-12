@@ -1,26 +1,37 @@
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+'use client'
 
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState } from "react";
 interface CurrentlyPlayingCardProps {
     content: CurrentlyPlayingResponse | null;
     recentlyPlayed: RecentlyPlayedResponse | null;
     isLoading: boolean;
 }
-
 export default function CurrentlyPlayingCard({content, recentlyPlayed, isLoading}: CurrentlyPlayingCardProps) {
-  // Check if track is currently active (or playing now). If it is not, get most recent track from recentlyPlayed response and use that as a fall back.
+  // State to store last content.
+  const [lastContent, setLastContent] = useState<CurrentlyPlayingResponse | null>(() => {
+    if (typeof window === "undefined") return null;
+    const cached = sessionStorage.getItem("lastContent");
+    return cached ? JSON.parse(cached) : null;
+  })
+  useEffect(() => {
+    if (content != null && content.item != null) {
+      setLastContent(content);
+      sessionStorage.setItem("lastContent", JSON.stringify(content));
+    }
+  }, [content])
+  // Check if track is currently active (or playing now). If it is not, get most recent track from lastContent as a fallback.
   const hasActiveSession = content != null && content.item != null;
   const isActive = hasActiveSession && content.is_playing;
-  const lastPlayedTrack = recentlyPlayed?.items[0].track ?? null;
-  // Only fall back to recently palyed if there is no active session at all.
-  const displayTrack = hasActiveSession ? content?.item : lastPlayedTrack;
-
+  const displayTrack = hasActiveSession ? content?.item : lastContent?.item ?? null;
+  const hasAnyTrack = displayTrack != null;
   return (
       <div>
       <Card className="rounded-2xl bg-primary">
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
-          {isLoading || (content == null && recentlyPlayed == null) ? (
+          {isLoading && !hasAnyTrack ? (
               <div className="flex items-center gap-10">
                 <Skeleton className="h-50 w-50 rounded" />
                 <div className="flex flex-col gap-2">
@@ -29,6 +40,11 @@ export default function CurrentlyPlayingCard({content, recentlyPlayed, isLoading
                   <Skeleton className="h-6 w-80" />
                   <Skeleton className="h-4 w-100" />
                 </div>
+              </div>
+          ) : !hasAnyTrack ? (
+              <div className="flex items-center gap-4 py-6 text-white">
+                <span className="h-2 w-2 bg-red-500 rounded-full shrink-0" />
+                <span className="text-base font-medium">No recent listening activity</span>
               </div>
           ) : (
             <div className="flex items-center gap-10">
@@ -51,23 +67,25 @@ export default function CurrentlyPlayingCard({content, recentlyPlayed, isLoading
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 bg-red-500 rounded-full" />
-                      <span>Not Playing</span>
+                      {/* CHANGED: was red dot / "Not Playing" — now yellow / "Last played" since we're showing cached lastContent here */}
+                      <span className="h-2 w-2 bg-gray-400 rounded-full" />
+                      <span>Last played</span>
                     </div>
                   )}
               </Badge>
-
               <div className="text-white font-bold text-2xl truncate w-100">
                 {displayTrack?.name}
               </div>
-
               <div className="text-muted-foreground text-lg truncate w-80">
                 {displayTrack?.artists[0]?.name} · {displayTrack?.album.name}
               </div>
-
               <div className="flex flex-col gap-1 text-sm text-muted-foreground">
                 <span>Playing on</span>
-                <span className="font-medium">{content?.device.name ?? "Unknown device"}</span>
+                <span className="font-medium">
+                  {hasActiveSession
+                    ? content?.device?.name ?? "Unknown device"
+                    : lastContent?.device?.name ?? "Unknown device"}
+                </span>
               </div>
             </div>
           </div>
