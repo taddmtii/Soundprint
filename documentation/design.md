@@ -103,3 +103,8 @@ TODO:
 - POST /token, grant_type=refresh_token
 
 4. After refresh of token, update users table with that new data.
+
+React Hydration: (Next.JS)
+- Server renders a component first. HTML then gets sent to browser.
+- Browser hydrates it, React walks through existing DOM and attaches things like event handlers or state to the elements that are already sitting on the page. This is Hydration.
+- React assumes both renderes match, and if they do not you get a hydration error.
