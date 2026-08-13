@@ -44,10 +44,15 @@ export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlay
                 </div>
               </div>
           ) : !hasAnyTrack ? (
-              <div className="flex items-center gap-4 py-6 text-white">
-                <span className="h-2 w-2 bg-red-500 rounded-full shrink-0" />
-                <span className="text-base font-medium">No recent listening activity</span>
-              </div>
+            <div className="flex items-center gap-10">
+                <div className="h-50 w-50 rounded bg-white/10 shrink-0 flex items-center justify-center">
+                </div>
+                <div className="flex flex-col gap-1 justify-center">
+                  <div className="text-white font-bold text-2xl w-100">
+                    No recent listening activity
+                  </div>
+                </div>
+            </div>
           ) : (
             <div className="flex items-center gap-10">
             <img
@@ -69,7 +74,6 @@ export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlay
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      {/* CHANGED: was red dot / "Not Playing" — now yellow / "Last played" since we're showing cached lastContent here */}
                       <span className="h-2 w-2 bg-gray-400 rounded-full" />
                       <span>Last played</span>
                     </div>
