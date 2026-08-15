@@ -10,7 +10,7 @@ export default function NowPlaying() {
   return (
     <div className="flex flex-col gap-4 items-center">
       <div className="flex flex-col">
-        <h1 className="text-2xl font-bold">Now playing</h1>
+        <h1 className="text-4xl font-bold">Now playing</h1>
         <span className="text-muted-foreground">What is coming out of your speakers right now. Whats next?</span>
       </div>
       <Separator />
