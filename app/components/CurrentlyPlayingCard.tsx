@@ -30,7 +30,7 @@ export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlay
   const displayTrack = hasActiveSession ? content?.item : lastContent?.item ?? null;
   const hasAnyTrack = displayTrack != null;
   return (
-      <div>
+      <div className="w-full">
       <Card className="rounded-2xl bg-primary">
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
           {isLoading && !hasAnyTrack ? (

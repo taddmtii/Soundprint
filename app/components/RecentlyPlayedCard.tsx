@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AudioLines, UsersRound } from "lucide-react";
+import { AudioLines } from "lucide-react";
 
 interface RecentlyPlayedCardProps {
   content: RecentlyPlayedItem[] | undefined
@@ -11,8 +11,8 @@ interface RecentlyPlayedCardProps {
 export default function RecentlyPlayedCard({content, isLoading}: RecentlyPlayedCardProps) {
   const topRecentlyPlayedTracks = content ? dedupeByTrack(content).slice(0,10) : undefined
   return (
-      <div className="w-125 h-100">
-      <Card>
+      <div className="w-full">
+      <Card className="rounded-2xl">
         <CardHeader className="text-muted-foreground">
             <div className="flex gap-2">
                 <AudioLines color="red" />
@@ -54,7 +54,7 @@ export default function RecentlyPlayedCard({content, isLoading}: RecentlyPlayedC
 }
 
 // Represents how many minutes ago the track was last played for display.
-function getMinutesAgo(played_at: string): string { 
+function getMinutesAgo(played_at: string): string {
     let res;
     const total_minutes = Math.round((Date.now() - new Date(played_at).getTime()) / 60000);
     if (total_minutes >= 60) {
