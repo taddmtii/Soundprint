@@ -8,7 +8,8 @@ export function useFetchData() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<SpotifyUser | null>(null);
   const [error, setError] = useState<Response>();
-  const POLLING_INTERVAL = 10000;
+  // const POLLING_INTERVAL = 10000;
+  const POLLING_INTERVAL = 1000000; // for testing purposes to avoid rate limits during testing.
 
   useEffect(() => {
     // topArtists, topTracks, and User only should be fetched on mount.

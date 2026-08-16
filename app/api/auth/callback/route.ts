@@ -60,6 +60,12 @@ export async function GET(request: NextRequest) {
     },
   });
 
+  if (!profileResponse.ok) {
+    const retryAfter = profileResponse.headers.get('retry-after');
+    console.error('Spotify profile fetch failed:', profileResponse.status, retryAfter, await profileResponse.text());
+    return NextResponse.json({ error: 'Failed to fetch Spotify profile' }, { status: 502 });
+  }
+
   const profile = await profileResponse.json();
 
   // Create entry in users table if user does not already exist. If they do exist, update fields with new information.
