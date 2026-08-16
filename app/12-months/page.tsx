@@ -1,5 +1,9 @@
+import Header from "../components/Header";
+
 export default function TwelveMonthsPage() {
-    return (
-        <></>
-    )
+  return (
+    <div className="w-full">
+      <Header />
+    </div>
+  )
 }
