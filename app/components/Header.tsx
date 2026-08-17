@@ -7,7 +7,7 @@ import { useFetchData } from "../hooks/useFetchData"
 export default function Header() {
   const data = useFetchData();
   return (
-    <header className="flex w-full h-20 items-center justify-between bg-white sticky top-0 px-6">
+    <header className="flex h-20 items-center rounded-2xl mx-4 mt-4 overflow-hidden justify-between bg-white/70 backdrop-blur-md sticky top-4 px-6 w-[calc(100%-2rem)] z-50">
       <div className="flex items-center gap-2">
         <span className="font-bold text-lg">Soundprint</span>
         <Badge className="rounded-2xl" variant="secondary">Beta</Badge>
@@ -21,7 +21,9 @@ export default function Header() {
       </nav>
 
       <div>
-        <span className="text-muted-foreground text-sm">Logged in as: { data.user?.display_name}</span>
+        <span className="text-muted-foreground text-sm truncate max-w-[200px]">
+          Logged in as: {data.user?.display_name}
+        </span>
       </div>
     </header>
   )
