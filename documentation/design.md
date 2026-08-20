@@ -108,3 +108,15 @@ React Hydration: (Next.JS)
 - Server renders a component first. HTML then gets sent to browser.
 - Browser hydrates it, React walks through existing DOM and attaches things like event handlers or state to the elements that are already sitting on the page. This is Hydration.
 - React assumes both renderes match, and if they do not you get a hydration error.
+
+
+Time Period Pages Metrics:
+
+#1 track tracks[0]
+#1 artist artists[0]
+Mainstream Meter (Average track popularity (0-100)) - tracks[]
+Genres spanned (across top artists) - artists[]
+Top Artist Reach -> artists[]
+Top Tracks -> tracks[]
+Top Artists -> artists[]
+Genre Mix -> artists[].genres

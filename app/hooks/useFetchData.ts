@@ -8,7 +8,7 @@ export function useFetchData() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<SpotifyUser | null>(null);
   const [error, setError] = useState<Response>();
-  // const POLLING_INTERVAL = 10000;
+  // const POLLING_INTERVAL = 3000;
   const POLLING_INTERVAL = 1000000; // for testing purposes to avoid rate limits during testing.
 
   useEffect(() => {
@@ -75,14 +75,14 @@ export function useFetchData() {
         setCurrentlyPlaying(currentlyPlayingData);
         console.log(currentlyPlayingData);
       }
-    }
+    };
     fetchStaticData();
     fetchLiveData();
     // Set up interval to run the callback (fetchLiveData). Returns ID that
     // references the id.
     const interval = setInterval(fetchLiveData, POLLING_INTERVAL);
     // Clean up the interval.
-    return () => clearInterval(interval)
+    return () => clearInterval(interval);
   }, []);
 
   return {
