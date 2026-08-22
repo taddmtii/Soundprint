@@ -6,7 +6,8 @@ export function useCurrentlyPlaying() {
     queryFn: async () => {
       const res = await fetch('/api/spotify/me/player');
       if (!res.ok) throw new Error('Failed to fetch currently playing...');
-      return res.json();
+      const data = await res.json();
+      return data;
     },
     refetchInterval: 30000,
     refetchIntervalInBackground: false, // dont pull when tab is not focused

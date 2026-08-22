@@ -1,15 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AudioLines } from "lucide-react";
+import { useRecentlyPlayed } from "../hooks/useRecentlyPlayed";
 
-interface RecentlyPlayedCardProps {
-  content: RecentlyPlayedItem[] | undefined
-  isLoading: boolean
-}
-
-
-export default function RecentlyPlayedCard({content, isLoading}: RecentlyPlayedCardProps) {
-  const topRecentlyPlayedTracks = content ? dedupeByTrack(content).slice(0,10) : undefined
+export default function RecentlyPlayedCard() {
+  const {data, isLoading, error} = useRecentlyPlayed();
+  const topRecentlyPlayedTracks = data ? dedupeByTrack(data).slice(0,10) : undefined
   return (
       <div className="w-full">
       <Card className="rounded-2xl">

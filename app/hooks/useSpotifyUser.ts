@@ -6,7 +6,8 @@ export function useSpotifyUser() {
     queryFn: async () => {
       const res = await fetch('/api/spotify/me');
       if (!res.ok) throw new Error('Failed to fetch user');
-      return res.json();
+      const data = await res.json();
+      return data;
     },
     staleTime: 36000000,
   });
