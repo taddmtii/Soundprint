@@ -22,7 +22,7 @@ export default function TimePeriod({pageTitle, heading, topArtists, topTracks, t
             <h1 className="text-4xl font-bold">{pageTitle}</h1>
             <span className="text-muted-foreground">{heading}</span>
           </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-1/4">
           <div className="flex justify-between gap-2">
             <TopArtist data={topArtists} isLoading={topArtistsLoading} />
             <TopTrack data={topTracks} isLoading={topTracksLoading} />
