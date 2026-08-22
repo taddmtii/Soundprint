@@ -2,13 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Music2 } from "lucide-react"
 
-interface TopTracksCardProps {
-  content: SpotifyTrack[] | undefined,
+interface TopTracksProps {
+  data: SpotifyTrack[] | undefined,
   isLoading: boolean;
 }
 
-export default function TopTracksCard({content, isLoading}: TopTracksCardProps) {
-    const top5 = content?.slice(0,5)
+export default function TopTracks({data, isLoading}: TopTracksProps) {
+    const top5 = data?.slice(0,5)
     return (
       <div className="w-125 h-100">
       <Card>
