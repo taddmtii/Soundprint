@@ -1,17 +1,18 @@
-'use client'
+import Header from "./Header"
+import TopArtist from "./TopArtist"
+import TopArtists from "./TopArtists"
+import TopTrack from "./TopTrack"
+import TopTracks from "./TopTracks"
 
-import Header from "../components/Header";
-import TopArtist from "../components/TopArtist";
-import TopArtists from "../components/TopArtists";
-import TopTrack from "../components/TopTrack";
-import TopTracks from "../components/TopTracks";
-import { useTopArtists } from "../hooks/useTopArtists";
-import { useTopTracks } from "../hooks/useTopTracks";
+interface TimePeriodProps {
+    topArtists: SpotifyArtist[] | undefined,
+    topTracks: SpotifyTrack[] | undefined,
+    topArtistsLoading: boolean,
+    topTracksLoading: boolean
+}
 
-export default function SixMonthsPage() {
-    const {data: topArtists, isLoading: topArtistsLoading} = useTopArtists("medium_term");
-    const {data: topTracks, isLoading: topTracksLoading} = useTopTracks("medium_term");
-    return (
+export default function TimePeriod({topArtists, topTracks, topArtistsLoading, topTracksLoading}: TimePeriodProps) {
+ return (
       <div className="w-full">
         <Header />
         <div className="flex flex-col gap-4 items-center p-4">
