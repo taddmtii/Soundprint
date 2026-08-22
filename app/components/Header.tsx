@@ -16,7 +16,7 @@ const { data, isLoading } = useSpotifyUser();
       <nav className="flex items-center gap-6">
         <Link href="/now-playing" className="text-sm font-medium hover:text-primary transition-colors">Now Playing</Link>
         <Link href="/4-weeks" className="text-sm font-medium hover:text-primary transition-colors">Last Month</Link>
-        <Link href="/6-months" className="text-sm font-medium hover:text-primary transition-colors">6 Months</Link>
+        <Link href="/6-months" className="text-sm font-medium hover:text-primary transition-colors">Last 6 Months</Link>
         <Link href="/12-months" className="text-sm font-medium hover:text-primary transition-colors">Last Year</Link>
       </nav>
 

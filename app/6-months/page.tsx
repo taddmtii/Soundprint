@@ -1,11 +1,6 @@
 'use client'
 
-import Header from "../components/Header";
 import TimePeriod from "../components/TimePeriod";
-import TopArtist from "../components/TopArtist";
-import TopArtists from "../components/TopArtists";
-import TopTrack from "../components/TopTrack";
-import TopTracks from "../components/TopTracks";
 import { useTopArtists } from "../hooks/useTopArtists";
 import { useTopTracks } from "../hooks/useTopTracks";
 
