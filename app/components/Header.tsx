@@ -2,10 +2,10 @@
 
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { useFetchData } from "../hooks/useFetchData"
+import { useSpotifyUser } from "../hooks/useSpotifyUser";
 
 export default function Header() {
-  const data = useFetchData();
+const { data, isLoading } = useSpotifyUser();
   return (
     <header className="flex h-20 items-center rounded-2xl mx-4 mt-4 overflow-hidden justify-between bg-white/70 backdrop-blur-md sticky top-4 px-6 w-[calc(100%-2rem)] z-50">
       <div className="flex items-center gap-2">
@@ -22,7 +22,7 @@ export default function Header() {
 
       <div>
         <span className="text-muted-foreground text-sm truncate max-w-[200px]">
-          Logged in as: {data.user?.display_name}
+          {isLoading ? "Loading..." : `Logged in as: ${data?.display_name ?? "Unknown"}`}
         </span>
       </div>
     </header>

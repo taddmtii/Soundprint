@@ -4,30 +4,29 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
-interface CurrentlyPlayingCardProps {
-    content: CurrentlyPlayingResponse | null;
-    isLoading: boolean;
-}
-export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlayingCardProps) {
-  // State to store last content.
-  const [lastContent, setLastContent] = useState<CurrentlyPlayingResponse | null>(null)
+import { useCurrentlyPlaying } from "../hooks/useCurrentlyPlaying";
+
+export default function CurrentlyPlayingCard() {
+  const {data, isLoading, error } = useCurrentlyPlaying();
+  // State to store last data.
+  const [lastdata, setLastdata] = useState<CurrentlyPlayingResponse | null>(null)
   useEffect(() => {
-    const cached = sessionStorage.getItem("lastContent");
+    const cached = sessionStorage.getItem("lastdata");
     if (cached) {
-      setLastContent(JSON.parse(cached));
+      setLastdata(JSON.parse(cached));
     }
   }, []);
 
   useEffect(() => {
-    if (content != null && content.item != null) {
-      setLastContent(content);
-      sessionStorage.setItem("lastContent", JSON.stringify(content));
+    if (data != null && data.item != null) {
+      setLastdata(data);
+      sessionStorage.setItem("lastdata", JSON.stringify(data));
     }
-  }, [content])
-  // Check if track is currently active (or playing now). If it is not, get most recent track from lastContent as a fallback.
-  const hasActiveSession = content != null && content.item != null;
-  const isActive = hasActiveSession && content.is_playing;
-  const displayTrack = hasActiveSession ? content?.item : lastContent?.item ?? null;
+  }, [data])
+  // Check if track is currently active (or playing now). If it is not, get most recent track from lastdata as a fallback.
+  const hasActiveSession = data != null && data.item != null;
+  const isActive = hasActiveSession && data.is_playing;
+  const displayTrack = hasActiveSession ? data?.item : lastdata?.item ?? null;
   const hasAnyTrack = displayTrack != null;
   return (
       <div className="w-full">
@@ -89,8 +88,8 @@ export default function CurrentlyPlayingCard({content, isLoading}: CurrentlyPlay
                 <span>Playing on</span>
                 <span className="font-medium">
                   {hasActiveSession
-                    ? content?.device?.name ?? "Unknown device"
-                    : lastContent?.device?.name ?? "Unknown device"}
+                    ? data?.device?.name ?? "Unknown device"
+                    : lastdata?.device?.name ?? "Unknown device"}
                 </span>
               </div>
             </div>

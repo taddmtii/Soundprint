@@ -3,11 +3,10 @@
 import { Separator } from "@/components/ui/separator";
 import CurrentlyPlayingCard from "../components/CurrentlyPlayingCard";
 import RecentlyPlayedCard from "../components/RecentlyPlayedCard";
-import { useFetchData } from "../hooks/useFetchData";
 import Header from "../components/Header";
+import { useCurrentlyPlaying } from "../hooks/useCurrentlyPlaying";
 
 export default function NowPlaying() {
-  const data = useFetchData();
   return (
     <div className="w-full">
       <Header />
@@ -18,9 +17,9 @@ export default function NowPlaying() {
         </div>
         <Separator />
         <div className="flex flex-col gap-4 items-center">
-          <CurrentlyPlayingCard content={data.currentlyPlaying} isLoading={data.isLoading} />
+          <CurrentlyPlayingCard />
           <Separator />
-          <RecentlyPlayedCard content={data.recentlyPlayed?.items} isLoading={data.isLoading} />
+          <RecentlyPlayedCard  />
         </div>
       </div>
     </div>
