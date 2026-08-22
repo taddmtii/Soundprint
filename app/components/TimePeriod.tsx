@@ -5,20 +5,22 @@ import TopTrack from "./TopTrack"
 import TopTracks from "./TopTracks"
 
 interface TimePeriodProps {
+    pageTitle: string,
+    heading: string,
     topArtists: SpotifyArtist[] | undefined,
     topTracks: SpotifyTrack[] | undefined,
     topArtistsLoading: boolean,
     topTracksLoading: boolean
 }
 
-export default function TimePeriod({topArtists, topTracks, topArtistsLoading, topTracksLoading}: TimePeriodProps) {
+export default function TimePeriod({pageTitle, heading, topArtists, topTracks, topArtistsLoading, topTracksLoading}: TimePeriodProps) {
  return (
       <div className="w-full">
         <Header />
         <div className="flex flex-col gap-4 items-center p-4">
           <div className="flex flex-col">
-            <h1 className="text-4xl font-bold">Last 6 Months</h1>
-            <span className="text-muted-foreground">Your most-played tracks and artists from the past six months.</span>
+            <h1 className="text-4xl font-bold">{pageTitle}</h1>
+            <span className="text-muted-foreground">{heading}</span>
           </div>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between gap-2">
