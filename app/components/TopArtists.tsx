@@ -2,13 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UsersRound } from "lucide-react";
 
-interface TopArtistsCardProps {
-  content: SpotifyArtist[] | undefined
+interface TopArtistsProps {
+  data: SpotifyArtist[] | undefined
   isLoading: boolean
 }
 
-export default function TopArtistsCard({content, isLoading}: TopArtistsCardProps) {
-  const top5 = content?.slice(0,5)
+export default function TopArtists({data, isLoading}: TopArtistsProps) {
+  const top5 = data?.slice(0,5)
   return (
       <div className="w-125 h-100">
       <Card>
