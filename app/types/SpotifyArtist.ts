@@ -5,5 +5,5 @@ interface SpotifyArtist {
   external_urls: { spotify: string };
   href: string;
   uri: string;
-  type: "artist";
+  type: 'artist';
 }
