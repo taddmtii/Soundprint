@@ -20,8 +20,10 @@ export default function FourWeeksPage() {
             <span className="text-muted-foreground">Your most-played tracks and artists from the past month.</span>
           </div>
         <div className="flex flex-col gap-2">
-          <TopArtist data={topArtists} isLoading={topArtistsLoading} />
-          <TopTrack data={topTracks} isLoading={topTracksLoading} />
+          <div className="flex justify-between gap-2">
+            <TopArtist data={topArtists} isLoading={topArtistsLoading} />
+            <TopTrack data={topTracks} isLoading={topTracksLoading} />
+          </div>
           <TopArtists data={topArtists} isLoading={topArtistsLoading}  />
           <TopTracks data={topTracks} isLoading={topTracksLoading}  />
         </div>

@@ -10,7 +10,6 @@ interface TopTracksProps {
 export default function TopTracks({data, isLoading}: TopTracksProps) {
     const top5 = data?.slice(0,5)
     return (
-      <div className="w-125 h-100">
       <Card>
         <CardHeader className="text-muted-foreground">
           <div className="flex gap-2">
@@ -50,6 +49,5 @@ export default function TopTracks({data, isLoading}: TopTracksProps) {
           )}
         </CardContent>
       </Card>
-      </div>
     );
 }

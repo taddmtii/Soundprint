@@ -10,7 +10,6 @@ interface TopArtistsProps {
 export default function TopArtists({data, isLoading}: TopArtistsProps) {
   const top5 = data?.slice(0,5)
   return (
-      <div className="w-125 h-100">
       <Card>
         <CardHeader className="text-muted-foreground">
             <div className="flex gap-2">
@@ -48,6 +47,5 @@ export default function TopArtists({data, isLoading}: TopArtistsProps) {
           )}
         </CardContent>
       </Card>
-      </div>
     );
 }

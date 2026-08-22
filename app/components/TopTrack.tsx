@@ -9,8 +9,7 @@ interface TopTrackProps {
 export default function TopTrack({ data, isLoading }: TopTrackProps) {
     const track = data?.[0];
     return (
-        <div className="w-50 h-50">
-        <Card>
+      <Card className="w-1/2">
         <CardHeader className="text-muted-foreground">
             <CardTitle>#1 Track</CardTitle>
         </CardHeader>
@@ -41,7 +40,6 @@ export default function TopTrack({ data, isLoading }: TopTrackProps) {
           )}
         </CardContent>
       </Card>
-        </div>
     )
 }
 
