@@ -9,7 +9,7 @@ interface TopArtistProps {
 export default function TopArtist({ data, isLoading }: TopArtistProps) {
     const artist = data?.[0];
     return (
-      <Card className="w-1/2">
+      <Card className="w-1/2 rounded-2xl shadow-lg">
         <CardHeader className="text-muted-foreground">
             <CardTitle>#1 Artist</CardTitle>
         </CardHeader>

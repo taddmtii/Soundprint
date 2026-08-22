@@ -10,7 +10,7 @@ interface TopTracksProps {
 export default function TopTracks({data, isLoading}: TopTracksProps) {
     const top5 = data?.slice(0,5)
     return (
-      <Card>
+      <Card className="rounded-2xl shadow-lg">
         <CardHeader className="text-muted-foreground">
           <div className="flex gap-2">
             <Music2 color="red" />

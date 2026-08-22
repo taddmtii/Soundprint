@@ -8,7 +8,7 @@ export default function RecentlyPlayedCard() {
   const topRecentlyPlayedTracks = data ? dedupeByTrack(data).slice(0,10) : undefined
   return (
       <div className="w-full">
-      <Card className="rounded-2xl">
+      <Card className="rounded-2xl shadow-lg">
         <CardHeader className="text-muted-foreground">
             <div className="flex gap-2">
                 <AudioLines color="red" />

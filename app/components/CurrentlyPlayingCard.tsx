@@ -30,7 +30,7 @@ export default function CurrentlyPlayingCard() {
   const hasAnyTrack = displayTrack != null;
   return (
       <div className="w-full">
-      <Card className="rounded-2xl bg-primary">
+      <Card className="rounded-2xl">
         <CardContent className="flex flex-col gap-2 text-lg font-bold">
           {isLoading && !hasAnyTrack ? (
               <div className="flex items-center gap-10">
@@ -44,10 +44,10 @@ export default function CurrentlyPlayingCard() {
               </div>
           ) : !hasAnyTrack ? (
             <div className="flex items-center gap-10">
-                <div className="h-50 w-50 rounded bg-white/10 shrink-0 flex items-center justify-center">
+                <div className="h-50 w-50 rounded-2xl shrink-0 flex items-center justify-center">
                 </div>
-                <div className="flex flex-col gap-1 justify-center">
-                  <div className="text-white font-bold text-2xl w-100">
+                <div className="flex flex-col gap-1 items-center justify-center">
+                  <div className="font-bold text-2xl w-100 text-foreground">
                     No recent listening activity
                   </div>
                 </div>
@@ -60,7 +60,7 @@ export default function CurrentlyPlayingCard() {
               alt={displayTrack?.album.name}
             />
             <div className="flex flex-col gap-1">
-              <Badge className="bg-white text-black hover:bg-white w-fit rounded-3xl">
+               <Badge variant="secondary" className="w-fit rounded-3xl border border-border text-foreground">
                 {isActive ? (
                     <div className="flex items-center gap-2">
                       <span className="h-2 w-2 bg-green-500 rounded-full" />
@@ -78,7 +78,7 @@ export default function CurrentlyPlayingCard() {
                     </div>
                   )}
               </Badge>
-              <div className="text-white font-bold text-2xl truncate w-100">
+              <div className="text-foreground font-bold text-2xl truncate w-100">
                 {displayTrack?.name}
               </div>
               <div className="text-muted-foreground text-lg truncate w-80">
@@ -86,7 +86,7 @@ export default function CurrentlyPlayingCard() {
               </div>
               <div className="flex flex-col gap-1 text-sm text-muted-foreground">
                 <span>Playing on</span>
-                <span className="font-medium">
+                <span className="font-medium text-foreground">
                   {hasActiveSession
                     ? data?.device?.name ?? "Unknown device"
                     : lastdata?.device?.name ?? "Unknown device"}

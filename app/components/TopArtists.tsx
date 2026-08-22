@@ -10,7 +10,7 @@ interface TopArtistsProps {
 export default function TopArtists({data, isLoading}: TopArtistsProps) {
   const top5 = data?.slice(0,5)
   return (
-      <Card>
+      <Card className="rounded-2xl shadow-lg">
         <CardHeader className="text-muted-foreground">
             <div className="flex gap-2">
                 <UsersRound color="red" />
