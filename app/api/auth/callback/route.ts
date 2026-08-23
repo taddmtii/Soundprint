@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID!;
-const REDIRECT_URI = 'http://127.0.0.1:3000/api/auth/callback';
+const REDIRECT_URI = process.env.NEXT_PUBLIC_APP_URL
+  ? `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`
+  : 'http://127.0.0.1:3000/api/auth/callback';
+
+const APP_ORIGIN = process.env.NEXT_PUBLIC_APP_URL ?? 'http://127.0.0.1:3000';
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
-const APP_ORIGIN = 'http://127.0.0.1:3000';
 
 export async function GET(request: NextRequest) {
   // Look at the url parameters and get the code, as well as the codeVerifier from the cookies.
