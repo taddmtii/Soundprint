@@ -1,5 +1,3 @@
-import { Prisma } from '@/app/generated/prisma/client';
-import { db } from '@/db';
 import { NextRequest, NextResponse } from 'next/server';
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID!;
