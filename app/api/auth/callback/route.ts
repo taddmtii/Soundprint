@@ -62,56 +62,16 @@ export async function GET(request: NextRequest) {
 
   if (!profileResponse.ok) {
     const retryAfter = profileResponse.headers.get('retry-after');
-    console.error('Spotify profile fetch failed:', profileResponse.status, retryAfter, await profileResponse.text());
+    console.error(
+      'Spotify profile fetch failed:',
+      profileResponse.status,
+      retryAfter,
+      await profileResponse.text(),
+    );
     return NextResponse.json({ error: 'Failed to fetch Spotify profile' }, { status: 502 });
   }
 
-  const profile = await profileResponse.json();
-
-  // Create entry in users table if user does not already exist. If they do exist, update fields with new information.
   const expiresAt = new Date(Date.now() + data.expires_in * 1000);
-
-  let user;
-  try {
-    user = await db.user.upsert({
-      where: { spotifyAccountId: profile.account_id },
-      update: {
-        spotifyUserId: profile.id,
-        displayName: profile.display_name,
-        email: profile.email,
-        imageUrl: profile.images[0].url ?? null,
-        spotifyProfileUrl: profile.external_urls?.spotify ?? null,
-        spotifyUri: profile.uri,
-        scopes: data.scope,
-        accessToken: data.access_token,
-        refreshToken: data.refresh_token,
-        token_expires_at: expiresAt,
-      },
-      create: {
-        spotifyAccountId: profile.account_id,
-        spotifyUserId: profile.id,
-        displayName: profile.display_name,
-        email: profile.email,
-        imageUrl: profile.images[0].url ?? null,
-        spotifyProfileUrl: profile.external_urls?.spotify ?? null,
-        spotifyUri: profile.uri,
-        scopes: data.scope,
-        accessToken: data.access_token,
-        refreshToken: data.refresh_token,
-        token_expires_at: expiresAt,
-      },
-    });
-  } catch (err) {
-    console.error('Upsert has failed for some reason:', err);
-    throw err;
-  }
-
-  // Redirect user to Dashboard now that they are authetnicated and store token in cookie.
-  // If user is null for any reason, redirect to home page for now.
-
-  // if (user == null) {
-  //   return NextResponse.redirect(new URL("/", APP_ORIGIN));
-  // }
 
   const res = NextResponse.redirect(new URL('/now-playing', APP_ORIGIN));
   res.cookies.set('access_token', data.access_token, {
