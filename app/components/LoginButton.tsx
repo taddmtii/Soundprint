@@ -3,7 +3,10 @@
 import { Button } from "@/components/ui/button";
 
 const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
-const REDIRECT_URI = "http://127.0.0.1:3000/api/auth/callback"
+const REDIRECT_URI = process.env.NEXT_PUBLIC_APP_URL
+  ? `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`
+  : 'http://127.0.0.1:3000/api/auth/callback';
+
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 const RESPONSE_TYPE = "code"
 const SCOPE = "user-read-private user-read-email user-top-read user-read-recently-played user-read-currently-playing user-read-playback-state";
