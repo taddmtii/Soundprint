@@ -9,7 +9,7 @@ export function useCurrentlyPlaying() {
       const data = await res.json();
       return data;
     },
-    refetchInterval: 30000,
+    refetchInterval: 3000,
     refetchIntervalInBackground: false, // dont pull when tab is not focused
   });
 }
