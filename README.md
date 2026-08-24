@@ -59,8 +59,6 @@ bun install | npm install
 
 Create a .env file in the root:
 
-# Spotify
-
 SPOTIFY_CLIENT_ID=your_client_id
 SPOTIFY_CLIENT_SECRET=your_client_secret
 SPOTIFY_REDIRECT_URI=http://127.0.0.1:3000/api/auth/callback
@@ -70,3 +68,5 @@ Note: you must also register the app in the Spotify Developer Dashbaord and add 
 ### 4. Run the development server
 
 bun dev | npm run dev
+
+Note: If you would like access to this app as a test user without creating your own spotify app, please reach out to me through my email which can be found through my personal portfolio website. (taddtrumbull.com)
