@@ -8,6 +8,11 @@ This is an **unofficial, non-commercial personal project** and is **not affiliat
 
 ---
 
+<img width="1512" height="884" alt="Screenshot 2026-08-24 at 12 16 25 PM" src="https://github.com/user-attachments/assets/ca042005-fce8-4c5a-af9f-41b30e902ab0" />
+
+<img width="1512" height="884" alt="Screenshot 2026-08-24 at 12 16 50 PM" src="https://github.com/user-attachments/assets/714c4809-0cfc-44c1-a41d-1dac07724827" />
+
+
 ## Features
 
 - **Spotify OAuth login** (Authorization Code + PKCE flow)
